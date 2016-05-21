@@ -16,8 +16,7 @@ class Cards(models.Model):
         null=False,
         verbose_name='card_description')
 
-    card_created_on = models.DateTimeField(
-        'date published',
+    card_created = models.DateTimeField(
         default=timezone.now)
 
     def __unicode__(self):
@@ -27,5 +26,5 @@ class Cards(models.Model):
     class Meta:
         """Information About the class."""
 
-        verbose_name = "Cards"
+        verbose_name = "Card"
         verbose_name_plural = "Cards"
