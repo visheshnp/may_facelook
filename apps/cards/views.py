@@ -10,3 +10,12 @@ def home(request):
     context = {'cards': cards}
     template = 'home.html'
     return render(request, template, context)
+
+
+def view_card(request, card_id):
+    """Display specific card."""
+    context = {}
+    card = Cards.objects.get(id=card_id)
+    context = {'card': card}
+    template = 'view_card.html'
+    return render(request, template, context)

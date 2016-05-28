@@ -16,6 +16,14 @@ class Cards(models.Model):
         null=False,
         verbose_name='card_description')
 
+    card_hero_image = models.ImageField(
+        upload_to='Cards',
+        blank=False,
+        null=False,
+        default='',
+        verbose_name='Card display image',
+        help_text='Add')
+
     card_created = models.DateTimeField(
         default=timezone.now)
 
