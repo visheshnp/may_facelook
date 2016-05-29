@@ -9,7 +9,7 @@
 		    {% for card in cards %}
 		        <div class="col-sm-12 col-md-4">
 		            <a href="cards/{{card.id}}/">
-		                <p><img src="/media/{{card.card_hero_image}}" width="330" height ="160"/></p>
+		                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
 		            </a>
 		            <a href="{{card.id}}"><h3>{{ card.card_title }}</h3></a>
 		            <p>{{ card.card_description|truncatewords:3 }}</p>
