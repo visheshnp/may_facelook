@@ -7,7 +7,7 @@
 		<h1> {{ card.card_title }} </h1>
 		{% if card.card_hero_image %}
 		
-			<p><img src="/media/{{card.card_hero_image}}" width="730" height ="160"/></p>
+			<p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="730" height ="160"/></p>
 
 		{% endif %}
 		 created on -{{ card.card_created }} | by ****
