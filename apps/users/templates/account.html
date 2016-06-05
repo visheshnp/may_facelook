@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
+
 {% block content %}
+<h1>{{request.user.username}}</h1>
     {%if account %}
     <p>
         <h1>Here's what we know about you!</h1>
         <img src="/media/{{account.profile_picture}}" width="160" height ="160"/>
     </p>
     {%endif%}
+
     <p>
         <form action="{% url 'account' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
