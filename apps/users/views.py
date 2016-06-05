@@ -24,6 +24,7 @@ def register(request):
                     password=password1,
                     username=username,
                     email=email)
+                print("user created")
 
                 context = {'success': True, 'message': 'Successfully saved. Please Login to continue'}
                 context.update(csrf(request))
@@ -135,7 +136,7 @@ def account(request):
             user_info = request.user.username
             user_info = User.objects.get(username=user_info)
             user_info = UserProfileInfo.objects.get(user=user_info)
-            context = {'account': user_info}
+            context = {'account': user_info, 'request': request}
         except:
             print('User Info Not Found')
         context.update(csrf(request))

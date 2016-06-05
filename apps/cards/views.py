@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.core.context_processors import csrf
 from .models import Cards
+from django.contrib.auth.decorators import login_required
+from apps.comments.forms import CommentsForm
+from apps.comments.models import Comments
 # Create your views here.
 
 
@@ -17,11 +20,15 @@ def view_card(request, card_id):
     """Display specific card."""
     context = {}
     card = Cards.objects.get(id=card_id)
-    context = {'card': card}
+    form = CommentsForm()
+    comments = Comments.objects.filter(cards=card)
+    context = {'card': card, 'comments': comments, 'form': form}
     template = 'view_card.html'
+    context.update(csrf(request))
     return render(request, template, context)
 
 
+@login_required(login_url='/users/login/')
 def create_card(request):
     """Creating new cards."""
     context = {}

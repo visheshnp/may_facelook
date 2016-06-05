@@ -1,22 +1,38 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 
 	<div class="content-details">
 		<h1> {{ card.card_title }} </h1>
 		{% if card.card_hero_image %}
-		
 			<p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="730" height ="160"/></p>
-
 		{% endif %}
 		 created on -{{ card.card_created }} | by ****
 	     <br>
 		 <br>
-
 		 <h1>Card Description</h1>
 		 {{ card.card_description}}
+	</div>
 
-	</div>	
+	<br><br><br>
+
+	<form action="{% url 'comment' card.id %}" method="POST" enctype="multipart/form-date">
+		{% csrf_token %}
+		{{form|crispy}}
+		<input class="btn btn-primary btn-sm" type='submit' name='submit' value='Comment'>
+    </form>
+	 
+	 {% if comments %}
+	 	<h3>Comments</h3>
+	 	{% for comment in comments %}
+		 	<div class="panel panel-info">
+			  <div class="panel-body">
+			    {{comment.comments}}
+			  </div>
+			  <div class="panel-footer">by | {{comment.user}}</div>
+			</div>
+		{% endfor %}
+    {% endif %}
 
 {% endblock %}
