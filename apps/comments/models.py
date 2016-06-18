@@ -30,3 +30,9 @@ class Comments(models.Model):
     def __unicode__(self):
         """Unicode for Comments."""
         return str(self.cards.card_title)
+
+    class Meta:
+        """Information About the class."""
+
+        verbose_name = "Comments"
+        verbose_name_plural = "Comments"

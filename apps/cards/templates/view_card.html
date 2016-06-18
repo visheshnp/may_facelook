@@ -8,7 +8,7 @@
 		{% if card.card_hero_image %}
 			<p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="730" height ="160"/></p>
 		{% endif %}
-		 created on -{{ card.card_created }} | by ****
+		 created on -{{ card.card_created }} {% if card.user %} | by {{ card.user }}{% endif %}
 	     <br>
 		 <br>
 		 <h1>Card Description</h1>
@@ -17,7 +17,7 @@
 
 	<br><br><br>
 
-	<form action="{% url 'comment' card.id %}" method="POST" enctype="multipart/form-date">
+	<form action="{% url 'comment' card.id %}" method="POST">
 		{% csrf_token %}
 		{{form|crispy}}
 		<input class="btn btn-primary btn-sm" type='submit' name='submit' value='Comment'>

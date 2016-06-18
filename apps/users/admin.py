@@ -35,14 +35,14 @@ class UserProfileInfoAdmin(admin.ModelAdmin):
     '''Displaying all the fields in admin in different sections.'''
     # readonly_fields = ['joining_date']
     fieldsets = [
-        ('User Information', {'fields': ['first_name', 'last_name', 'gender', 'profile_picture', 'joining_date']}),
+        ('User Information header', {'fields': ['user', 'first_name', 'last_name', 'gender', 'profile_picture']}), ('User Information Date', {'fields': ['joining_date']})
         # ('Date information', {'fields': ['joining_date'], 'classes': ['collapse']}),
     ]
 
     list_display = ['first_name', 'gender', 'profile_picture']
     # list_filter = ['user__joining_date']
-    search_fields = ['name']
-    readonly_fields = ['joining_date']
+    search_fields = ['first_name', 'last_name', 'gender']
+    readonly_fields = ['user', 'joining_date']
 
     class Meta:
         """Information of this class."""

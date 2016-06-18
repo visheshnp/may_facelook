@@ -4,13 +4,29 @@
 
 {% block content %}
 	{% if cards.count > 0 %}
+		{% if private_cards.count > 0 %}
+			<h2>Private Cards</h2>
+			<div class="row">
+			    {% for card in private_cards %}
+			        <div class="col-sm-12 col-md-4">
+			            <a href="{% url 'view_card' card.id %}">
+			                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
+			            </a>
+			            <a href="{% url 'view_card' card.id %}"><h3>{{ card.card_title }}</h3></a>
+			            <p>{{ card.card_description|truncatewords:3 }}</p>
+			        </div>
+			    {% endfor %}
+			</div>
+		{% endif %}
+
+		<h2>Public Cards</h2>
 		<div class="row">
-		    {% for card in cards %}
+		    {% for card in public_cards %}
 		        <div class="col-sm-12 col-md-4">
-		            <a href="cards/{{card.id}}/">
+		            <a href="{% url 'view_card' card.id %}">
 		                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
 		            </a>
-		            <a href="{{card.id}}"><h3>{{ card.card_title }}</h3></a>
+		            <a href="{% url 'view_card' card.id %}"><h3>{{ card.card_title }}</h3></a>
 		            <p>{{ card.card_description|truncatewords:3 }}</p>
 		        </div>
 		    {% endfor %}

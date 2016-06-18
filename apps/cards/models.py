@@ -32,6 +32,9 @@ class Cards(models.Model):
         verbose_name='Card display image',
         help_text='Add')
 
+    private = models.BooleanField(
+        default=False)
+
     card_created = models.DateTimeField(
         default=timezone.now)
 

@@ -133,7 +133,6 @@ def account(request):
 
     else:
         try:
-            import ipdb; ipdb.set_trace()
             user_info = request.user.username
             user_info = User.objects.get(username=user_info)
             user_info = UserProfileInfo.objects.get(user=user_info)
