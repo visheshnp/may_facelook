@@ -5,6 +5,7 @@ from .models import Cards
 from django.contrib.auth.decorators import login_required
 from apps.comments.forms import CommentsForm
 from apps.comments.models import Comments
+from apps.likes.models import Likes
 # Create your views here.
 
 
@@ -28,9 +29,13 @@ def view_card(request, card_id):
     card_info = Cards.objects.get(id=card_id)
     if card_info.private is False:
         card = card_info
+        try:
+            likes = Likes.objects.get(card=card)
+        except:
+            likes = None
         form = CommentsForm()
         comments = Comments.objects.filter(cards=card)
-        context = {'card': card, 'comments': comments, 'form': form}
+        context = {'card': card, 'comments': comments, 'form': form, 'likes': likes}
         template = 'view_card.html'
         context.update(csrf(request))
         return render(request, template, context)
@@ -38,9 +43,13 @@ def view_card(request, card_id):
         if request.user.is_authenticated():
             if card_info.user == request.user:
                 card = card_info
+                try:
+                    likes = Likes.objects.get(card=card)
+                except:
+                    likes = None
                 form = CommentsForm()
                 comments = Comments.objects.filter(cards=card)
-                context = {'card': card, 'comments': comments, 'form': form}
+                context = {'card': card, 'comments': comments, 'form': form, 'likes': likes}
                 template = 'view_card.html'
                 context.update(csrf(request))
                 return render(request, template, context)
@@ -56,7 +65,6 @@ def create_card(request):
     context = {}
     if request.method == 'POST':
         try:
-
             card_title = request.POST.get('card_title')
             card_description = request.POST.get('card_description')
             card_picture = request.FILES.get('card_picture')
@@ -74,7 +82,8 @@ def create_card(request):
                     card_title=card_title,
                     user=created_by,
                     card_description=card_description,
-                    card_hero_image=card_picture)
+                    card_hero_image=card_picture,
+                    private=card_private)
             else:
                 card_info = Cards(
                     card_title=card_title,

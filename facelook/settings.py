@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.cards',
     'apps.comments',
+    'apps.likes',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.media',
+                'django.core.context_processors.request',
             ],
         },
     },

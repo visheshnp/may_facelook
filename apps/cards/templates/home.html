@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-
+{% load cards_filter %}
 
 
 {% block content %}
 	{% if cards.count > 0 %}
+
+
 		{% if private_cards.count > 0 %}
 			<h2>Private Cards</h2>
 			<div class="row">
-			    {% for card in private_cards %}
+			    {% for card in cards|private:request %}
 			        <div class="col-sm-12 col-md-4">
 			            <a href="{% url 'view_card' card.id %}">
 			                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
@@ -21,7 +23,7 @@
 
 		<h2>Public Cards</h2>
 		<div class="row">
-		    {% for card in public_cards %}
+		    {% for card in cards|public %}
 		        <div class="col-sm-12 col-md-4">
 		            <a href="{% url 'view_card' card.id %}">
 		                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
@@ -31,6 +33,8 @@
 		        </div>
 		    {% endfor %}
 		</div>
+
+
 
 	{% else %}
 	    <p>None to Show cards are empty</p>

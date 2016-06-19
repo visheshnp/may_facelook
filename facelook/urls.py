@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^cards/', include('apps.cards.urls')),
     url(r'^users/', include('apps.users.urls')),
     url(r'^comment/', include('apps.comments.urls')),
+    url(r'^like/', include('apps.likes.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

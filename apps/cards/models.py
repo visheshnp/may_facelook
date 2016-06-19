@@ -35,6 +35,11 @@ class Cards(models.Model):
     private = models.BooleanField(
         default=False)
 
+    # likes = models.ManyToManyField(
+    #     User,
+    #     related_name='likes',
+    #     default='')
+
     card_created = models.DateTimeField(
         default=timezone.now)
 

@@ -12,7 +12,17 @@
 	     <br>
 		 <br>
 		 <h1>Card Description</h1>
-		 {{ card.card_description}}
+		 {% if likes %}
+			 <p class="glyphicon glyphicon-thumbs-up"></p>
+			 {{likes.get_likes_count}}
+		 {% endif %}
+		 {% if request.user in likes.user.all %}
+		 	<a href="{% url 'like' card.id %}"> DisLike</a>
+		 {% else %}
+		 	<a href="{% url 'like' card.id %}"> Like</a>
+		 {% endif %}
+		 <br>
+		{{ card.card_description}}
 	</div>
 
 	<br><br><br>
