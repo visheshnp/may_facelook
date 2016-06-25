@@ -6,20 +6,54 @@ from django.contrib.auth.decorators import login_required
 from apps.comments.forms import CommentsForm
 from apps.comments.models import Comments
 from apps.likes.models import Likes
+
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 # Create your views here.
 
 
 def home(request):
     """Display all cards."""
     context = {}
-    cards = Cards.objects.all()
-    public_cards = Cards.objects.filter(private=False)
+    all_cards = Cards.objects.all()
+    paginator = Paginator(all_cards, 5)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        cards = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        cards = paginator.page(paginator.num_pages)
+
+    context = {'cards': cards}
+    template = 'home.html'
+    return render(request, template, context)
+
+
+def private_cards(request):
+    """Display all cards."""
+    context = {}
     if request.user.is_authenticated():
         private_cards = Cards.objects.filter(user=request.user, private=True)
     else:
         private_cards = None
-    context = {'cards': cards, 'public_cards': public_cards, 'private_cards': private_cards}
-    template = 'home.html'
+
+    paginator = Paginator(private_cards, 5)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        cards = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        cards = paginator.page(paginator.num_pages)
+
+    context = {'cards': cards}
+    template = 'private_cards.html'
     return render(request, template, context)
 
 

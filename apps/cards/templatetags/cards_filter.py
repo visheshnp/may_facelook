@@ -7,14 +7,35 @@ register = template.Library()
 
 @register.filter
 def private(cards, request):
+    cards_list = []
     if request.user.is_authenticated():
-        private_cards = Cards.objects.filter(user=request.user, private=True)
-    else:
-        private_cards = None
-    return private_cards
+        for card in cards:
+            if card.private is True and card.user == request.user:
+                cards_list.append(card)
+
+    return cards_list
 
 
 @register.filter
 def public(cards):
-    public_cards = Cards.objects.filter(private=False)
-    return public_cards
+    cards_list = []
+    for card in cards:
+        if card.private is False:
+            cards_list.append(card)
+
+    return cards_list
+
+
+@register.filter
+def all_cards(cards, request):
+    cards_list = []
+    for card in cards:
+        if card.private is False:
+            cards_list.append(card)
+
+    if request.user.is_authenticated():
+        for card in cards:
+            if card.private is True and card.user == request.user:
+                cards_list.append(card)
+
+    return cards_list

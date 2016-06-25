@@ -19,6 +19,7 @@
                   <li><a href="{% url 'register' %}">SignUp</a></li>
                 {% endif %}
                 {% if request.user.username %}
+                  <li><a href="{% url 'private_cards' %}">Private Cards</a></li>
                   <li><a href="{% url 'create_card' %}">Create Card</a></li>
                   <li><a href="{% url 'account' %}">My Profile</a></li>
                   <li><a href="{% url 'logout' %}">Logout</a></li>

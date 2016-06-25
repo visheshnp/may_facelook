@@ -16,6 +16,7 @@
 			 <p class="glyphicon glyphicon-thumbs-up"></p>
 			 {{likes.get_likes_count}}
 		 {% endif %}
+		 
 		 {% if request.user in likes.user.all %}
 		 	<a href="{% url 'like' card.id %}"> DisLike</a>
 		 {% else %}

@@ -4,10 +4,11 @@
 
 {% block content %}
 
-	<div class="well">Home</div>
+	<div class="well">Private Cards</div>
+
 	{% if cards.count > 0 %}
 		<div class="row">
-		    {% for card in cards.object_list|all_cards:request %}
+		    {% for card in cards.object_list %}
 		        <div class="col-sm-12 col-md-4">
 		            <a href="{% url 'view_card' card.id %}">
 		                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
