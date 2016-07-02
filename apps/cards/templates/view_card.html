@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load cards_filter %}
 
 {% block content %}
 
@@ -12,16 +13,28 @@
 	     <br>
 		 <br>
 		 <h1>Card Description</h1>
-		 {% if likes %}
-			 <p class="glyphicon glyphicon-thumbs-up"></p>
-			 {{likes.get_likes_count}}
-		 {% endif %}
+
+        <div class="btn-group" role="group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  	{% if likes %}
+					<p class="glyphicon glyphicon-thumbs-up"></p>
+					{{likes.get_likes_count}}
+				{% endif %}
+				<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					{% for user in likes|like_users%}
+		            	<li>{{user}}</li>
+		            {% endfor %}
+				</ul>
+		</div>
 		 
 		 {% if request.user in likes.user.all %}
 		 	<a href="{% url 'like' card.id %}"> DisLike</a>
 		 {% else %}
 		 	<a href="{% url 'like' card.id %}"> Like</a>
 		 {% endif %}
+		 <br>
 		 <br>
 		{{ card.card_description}}
 	</div>

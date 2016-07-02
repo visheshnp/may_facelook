@@ -93,6 +93,29 @@ def view_card(request, card_id):
             return HttpResponseRedirect('/')
 
 
+def search(request):
+    context = {}
+    search_list = []
+    if request.method == 'POST':
+        try:
+            searchtext = request.POST.get('searchText')
+
+            cards = Cards.objects.filter(card_title__icontains=searchtext)
+            search_list = cards
+            # for card in cards:
+            #     if card.card_title == searchtext:
+            #         search_list.append(card)
+
+            context = {'search_list': search_list}
+            context.update(csrf(request))
+            template = "search.html"
+            return render(request, template, context)
+        except:
+            context = {'success': False, 'message': 'Saving failed', 'full_name': request.user.username}
+
+    return HttpResponseRedirect('/')
+
+
 @login_required(login_url='/users/login/')
 def create_card(request):
     """Creating new cards."""

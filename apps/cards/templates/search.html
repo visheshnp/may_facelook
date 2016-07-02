@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class="row">
+	    {% for card in search_list%}
+	        <div class="col-sm-12 col-md-4">
+	            <a href="{% url 'view_card' card.id %}">
+	                <p><img src="{{ MEDIA_URL }}{{card.card_hero_image}}" width="330" height ="160"/></p>
+	            </a>
+	            <a href="{% url 'view_card' card.id %}"><h3>{{ card.card_title }}</h3></a>
+	            <p>{{ card.card_description|truncatewords:3 }}</p>
+	        </div>
+	    {% endfor %}
+	</div>
+
+{% endblock content %}

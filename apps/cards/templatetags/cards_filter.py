@@ -1,8 +1,17 @@
 """"Filter."""
 from django import template
 # from requests import request
-from apps.cards.models import Cards
+# from apps.cards.models import Cards
 register = template.Library()
+
+
+@register.filter
+def like_users(likes):
+    user_list = []
+    for user in likes.user.all():
+        user_list.append(user.username)
+
+    return user_list
 
 
 @register.filter
