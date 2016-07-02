@@ -14,6 +14,7 @@
 		 <br>
 		 <h1>Card Description</h1>
 
+		{% if likes != None %}
         <div class="btn-group" role="group">
 			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			  	{% if likes %}
@@ -28,12 +29,18 @@
 		            {% endfor %}
 				</ul>
 		</div>
-		 
-		 {% if request.user in likes.user.all %}
-		 	<a href="{% url 'like' card.id %}"> DisLike</a>
+		{% endif %}
+
+		 {% if likes != None %}
+			 {% if request.user in likes.user.all %}
+			 	<a href="{% url 'like' card.id %}"> DisLike</a>
+			 {% else %}
+			 	<a href="{% url 'like' card.id %}"> Like</a>
+			 {% endif %}
 		 {% else %}
 		 	<a href="{% url 'like' card.id %}"> Like</a>
 		 {% endif %}
+
 		 <br>
 		 <br>
 		{{ card.card_description}}

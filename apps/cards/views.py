@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponseRedirect
 from django.core.context_processors import csrf
+from django.contrib.auth.models import User
 from .models import Cards
 from django.contrib.auth.decorators import login_required
 from apps.comments.forms import CommentsForm
 from apps.comments.models import Comments
 from apps.likes.models import Likes
+
 
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 # Create your views here.
@@ -15,6 +17,19 @@ def home(request):
     """Display all cards."""
     context = {}
     all_cards = Cards.objects.all()
+    cards_list = []
+    import ipdb; ipdb.set_trace()
+    for card in all_cards:
+        if card.private is False:
+            cards_list.append(card)
+
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        for card in all_cards:
+            if card.private is True and card.user == user:
+                cards_list.append(card)
+    all_cards = cards_list
+
     paginator = Paginator(all_cards, 5)
 
     try:
