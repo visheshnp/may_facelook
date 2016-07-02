@@ -18,7 +18,6 @@ def home(request):
     context = {}
     all_cards = Cards.objects.all()
     cards_list = []
-    import ipdb; ipdb.set_trace()
     for card in all_cards:
         if card.private is False:
             cards_list.append(card)
